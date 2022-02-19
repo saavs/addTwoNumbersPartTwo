@@ -1,0 +1,103 @@
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<Integer> s1=new Stack<>();
+        Stack<Integer> s2=new Stack<>();
+        Stack<Integer> r=new Stack<>();
+    
+
+        ListNode head1=l1;
+        ListNode head2=l2;
+        boolean flag=true;
+
+        while(flag)
+        {
+            if(head1!=null)
+            {
+                s1.push(head1.val);
+            }
+            if(head2!=null)
+            {
+                s2.push(head2.val);
+            }
+            
+            if(head1!=null)
+            {head1=head1.next;}
+            
+            if(head2!=null)
+            {head2=head2.next;}
+            if(head1==null && head2==null)
+            {
+                flag=false;
+            }
+
+        }
+        System.out.println(s1);
+        System.out.println(s2);
+        int carry=0;
+        int num=0;
+        while (!s1.isEmpty() || !s2.isEmpty())
+        {
+            if(!s1.isEmpty() && !s2.isEmpty())
+            {
+                num=s1.pop()+s2.pop()+carry;
+                if(num>=10)
+                {
+                    carry=1;
+                    r.push(num%10);
+                }
+                else
+                {
+                    carry=0;
+                    r.push(num);
+                }
+
+            }
+            else if(s1.isEmpty() && !s2.isEmpty())
+            {
+                num=s2.pop()+carry;
+                 if(num>=10)
+                {
+                    carry=1;
+                    r.push(num%10);
+                }
+                else
+                {
+                    carry=0;
+                    r.push(num);
+                }
+
+            }
+            else if(!s1.isEmpty() && s2.isEmpty())
+            {
+                num=s1.pop()+carry;
+                if(num>=10)
+                {
+                    carry=1;
+                    r.push(num%10);
+                }
+                else
+                {
+                    carry=0;
+                    r.push(num);
+                }
+
+            }
+
+        }
+        if(carry==1)
+        {
+            r.push(carry);
+        }
+        System.out.println("---------------"+r+"--------------");
+
+        ListNode dh=new ListNode(0);
+        ListNode l3=dh;
+        while(!r.isEmpty())
+        {
+            ListNode nee=new ListNode(r.pop());
+            l3.next=nee;
+            l3=l3.next;
+        }
+        return dh.next;
+        
+    }
